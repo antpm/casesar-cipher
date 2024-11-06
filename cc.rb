@@ -1,17 +1,18 @@
-def caesar_ciph(input, shift, output = '')
+def caesar_ciph(input, shift)
+    output = ''
+    base = 0
     input.each_byte do |c|
-        converted = c
-        if c.between?(65, 122)
-            shift.times do
-                converted += 1
-                if c <= 90 and converted > 90
-                converted -= 26
-                elsif converted > 122
-                converted -= 26
-                end
-            end
+        if c < 91
+          base = 65
+        else
+            base = 97
         end
-        output += converted.chr
+        if c.between?(65,90) or c.between?(97,122)
+          rot = (((c - base) + shift) % 26) + base
+          output += rot.chr
+        else 
+            output += c.chr
+        end
     end
     output
 end
